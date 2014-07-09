@@ -80,7 +80,9 @@ exports.init = function(grunt) {
         img = group[3].trim()
           .replace(rQuotes, "")
           .replace(rParams, ""); // remove query string/hash parmams in the filename, like foo.png?bar or foo.png#bar
-
+				if (opts.cdnUrl && img.indexOf(opts.cdnUrl) == 0) {
+					img = img.substring(opts.cdnUrl.length); // Remove the cdn url
+				}
         // see if this img was already processed before...
         if(cache[img]) {
           grunt.log.error("The image " + img + " has already been encoded elsewhere in your stylesheet. I'm going to do it again, but it's going to make your stylesheet a lot larger than it needs to be.");
